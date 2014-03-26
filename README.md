@@ -4,6 +4,19 @@ MarkdownElement
 write markdown in a HTML page and it will render it as HTML.
 
 
+#Usage Example
+
+```
+<html>
+  <body>
+    <markdown>
+      #Hello World
+    </markdown>
+  </body>
+</html>
+```
+
+
 #API
 
 ###convertElement(element)
