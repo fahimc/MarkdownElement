@@ -36,3 +36,9 @@ This method replaces markdown string with a String with HTML.
 **returns** String
 
 ***
+
+#Credits
+
+**[Marked](https://github.com/chjj/marked/)** - Fast Markdown parser in JavaScript  
+**[HighlighJS](http://highlightjs.org/)** - Hightlight syntax in JavaScript  
+
