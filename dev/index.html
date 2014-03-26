@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>index</title>
+		<meta name="author" content="Fahim Chowdhury" />
+		<!-- Date: 2014-03-25 -->
+		<script type="text/javascript" src="lib/marked.js"></script>
+		<script type="text/javascript" src="lib/highlight.pack.js"></script>
+		<script type="text/javascript" src="lib/markdownHTML.js"></script>
+		<link type="text/css" rel="stylesheet" href="lib/theme/github.css" />
+		<link type="text/css" rel="stylesheet" href="lib/theme/styles/github.css" />
+	</head>
+	<body>
+<markdown>
+# Creating List Items
+***
+
+*Author: Fahim Chowdhury*  
+*Last Updated: 25/03/2014*
+
+##Contents  
+
+**-Inheritance**  
+**-Creating the Constructor**  
+**-Methods that you need to override** 
+***
+###Inheritance
+
+All custom list items must extend **AbstractListItem**.
+
+**Example**
+
+```
+goog.inherits(customItem, nova.menu.AbstractListItem);
+```
+
+###Creating the Constructor 
+
+The constructor will be passed to parameters:
+
+**modelFacade**: the model facade  
+**viewModel**: the view model for the current item
+
+Within the constructor you will need to call a method called **_construct** and pass the parameters. This is like a constructor method to setup the item. You can override this and add your own code but you will need to call the bass class.
+
+**Example**  
+
+```  
+var customItem  =  function(modelFacade, viewModel) {
+this._construct(modelFacade, viewModel);
+}  
+```  
+###Methods that you need to override
+
+####build()
+This is where you will create all the elements required for the item (DOM Elements etc).  
+-The _topNode variable needs to be set.  
+-Ensure you call **updateStates()** method.  
+-Use the createElement method to create a DOM element. This takes two parameters, the first is the type of DOM element you wish to create and the second is the data attribute label for the element. The label will be used for decorators.
+
+**Example**  
+  
+```  
+customItem.prototype.build = function() {
+  this.setElementNode(this.createElement('DIV'));
+  this._topNode =new nova.ElementWrapper(/** @type{Element} */  (this.getElementNode()));
+  
+  this._textLabel = this.createElement('SPAN', "title");
+
+  this.getElementNode().appendChild(this._textLabel);
+  this.updateStates();
+};  
+```  
+
+####applyStyle()
+In this method you can set the classNames or styles for your elements.  
+-Ensure you call the base class method **applyStyle()**.
+
+**Example**
+
+```  
+customItem.prototype.applyStyle = function() {
+
+  nova.menu.AbstractListItem.prototype['applyStyle'].call(this);
+  this.getElementNode().classList.add("custom");
+
+};
+
+```  
+
+####updateStates()
+This method is where you update your item depending on the states/data in the model.  
+-Ensure you call the base class method **updateStates()**.
+
+**Example**
+
+```  
+customItem.prototype.updateStates = function() {
+
+  nova.menu.AbstractListItem.prototype['updateStates'].call(this);
+  if (this._textLabel)
+    this._textLabel.innerHTML = this.getViewModel().model['title'];
+
+
+};
+```  
+
+
+</markdown>
+	</body>
+</html>
+
