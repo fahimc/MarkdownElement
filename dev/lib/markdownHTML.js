@@ -1,6 +1,6 @@
 var MarkdownHTML = (function() {
 
-  function MarkdownHTML() {
+   function MarkdownHTML() {
   };
 
   MarkdownHTML.prototype = {
@@ -15,7 +15,21 @@ var MarkdownHTML = (function() {
     },
     convertElement : function(element) {
       var _this = this;
-      marked(element.innerHTML, function(err, content) {
+      var marktext =element.innerHTML;
+      
+      var findCommentStart = '<!--';
+      var findCommentEnd = '-->';
+      var re = new RegExp(findCommentStart, 'img');
+      var re2 = new RegExp(findCommentEnd, 'img');
+
+      marktext = marktext.replace(re, '');
+      marktext = marktext.replace(re2, '');
+      
+  
+     
+      
+      
+      marked(this.htmlEscape(marktext), function(err, content) {
         if (err)
           throw err;
 
@@ -28,29 +42,48 @@ var MarkdownHTML = (function() {
       });
 
     },
+     htmlEscape:function(str) {
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+},
     convertCodeToText : function(content) {
       content = content.replace(/\r?\n|\r/g, "<br>");
-
+    
+      
+// console.log(content);
       var pattern = /<code[^>]*>(.*?)<\/code>/img;
       var codeTags = content.match(pattern);
-      var elem = document.createElement("div");
-
-      for (var a = 0; a < codeTags.length; a++) {
-        var code = codeTags[a];
-        var newCode = code;
+      
+      if (codeTags) {
+        for (var a = 0; a < codeTags.length; a++) {
+          var code = codeTags[a];
+          codeTags[a]="[code"+this._codeCollection.length+"]";
         
-        newCode = newCode.replace("<code>", "");
-        newCode = newCode.replace("</code>", "");
-        newCode = newCode.replace("&lt;!--", "");
-        newCode = newCode.replace("--&gt;", "");
+          // var newCode = code;
 
-        elem.innerText = newCode;
+          // newCode = newCode.replace("<code>", "");
+          // newCode = newCode.replace("</code>", "");
+          // newCode = newCode.replace("&lt;!--", "");
+          // newCode = newCode.replace("--&gt;", "");
+// 
+        // //  console.log("code:",newCode);
+          // // elem.innerText = newCode;
+          // var elem = document.createTextNode(newCode);
+          // console.log(elem);
+          // var newCode = "<code>" + elem.nodeValue + "</code>";
+// 
+// console.log(code);
+          content = content.replace(code,  codeTags[a]);
+//           
+          // console.log();
 
-        var newCode = "<code>" + elem.innerText + "</code>";
-
-        content = content.replace(code, newCode);
-
+        }
       }
+
       return content;
 
     },
@@ -67,5 +100,4 @@ var MarkdownHTML = (function() {
   return new MarkdownHTML();
 
 })();
-
 MarkdownHTML.init();

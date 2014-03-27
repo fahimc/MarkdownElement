@@ -1301,23 +1301,25 @@ var MarkdownHTML = (function() {
       var pattern = /<code[^>]*>(.*?)<\/code>/img;
       var codeTags = content.match(pattern);
       var elem = document.createElement("div");
+      if (codeTags) {
+        for (var a = 0; a < codeTags.length; a++) {
+          var code = codeTags[a];
+          var newCode = code;
 
-      for (var a = 0; a < codeTags.length; a++) {
-        var code = codeTags[a];
-        var newCode = code;
-        
-        newCode = newCode.replace("<code>", "");
-        newCode = newCode.replace("</code>", "");
-        newCode = newCode.replace("&lt;!--", "");
-        newCode = newCode.replace("--&gt;", "");
+          newCode = newCode.replace("<code>", "");
+          newCode = newCode.replace("</code>", "");
+          newCode = newCode.replace("&lt;!--", "");
+          newCode = newCode.replace("--&gt;", "");
 
-        elem.innerText = newCode;
+          elem.innerText = newCode;
 
-        var newCode = "<code>" + elem.innerText + "</code>";
+          var newCode = "<code>" + elem.innerText + "</code>";
 
-        content = content.replace(code, newCode);
+          content = content.replace(code, newCode);
 
+        }
       }
+
       return content;
 
     },
