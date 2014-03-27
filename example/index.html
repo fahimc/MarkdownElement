@@ -38,20 +38,38 @@ Paragraphs must be separated by a blank line. Basic formatting of *italics* and 
 var test = function(){};  
 ```
 ```
+<!--
 <body>
-		<header>
-			<p>Samples</p>
-		</header>
-		<ul class="wrapper">
-			<li>
-				<ul>
-					[list]
-				</ul>
-				
-			</li>
-			<li>[samples]</li>
-		</ul>
-	</body>
+		 <meta charset="utf-8">
+  <title>jQuery UI Button - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  
+<head>
+ 
+  <script>
+  $(function() {
+    $( "input[type=submit], a, button" )
+      .button()
+      .click(function( event ) {
+        event.preventDefault();
+      });
+  });
+  </script>
+</head>
+<body>
+ 
+<button>A button element</button>
+ 
+<input type="submit" value="A submit button">
+ 
+<a href="#">An anchor</a>
+ 
+ 
+</body>
+-->
 ```
 </markdown>
 <script type="text/javascript">

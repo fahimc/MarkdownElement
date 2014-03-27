@@ -31,17 +31,22 @@ var MarkdownHTML = (function() {
     convertCodeToText : function(content) {
       content = content.replace(/\r?\n|\r/g, "<br>");
 
-      var pattern = /<code[^>]*>((.|[\n\r])*)<\/code>/img;
+      var pattern = /<code[^>]*>(.*?)<\/code>/img;
       var codeTags = content.match(pattern);
+      var elem = document.createElement("div");
 
       for (var a = 0; a < codeTags.length; a++) {
         var code = codeTags[a];
-        code = code.replace("<code>", "");
-        code = code.replace("</code>", "");
+        var newCode = code;
+        
+        newCode = newCode.replace("<code>", "");
+        newCode = newCode.replace("</code>", "");
+        newCode = newCode.replace("&lt;!--", "");
+        newCode = newCode.replace("--&gt;", "");
 
-        var escapedCode = escape(code);
+        elem.innerText = newCode;
 
-        var newCode = "<code>" + escapedCode + "</code>";
+        var newCode = "<code>" + elem.innerText + "</code>";
 
         content = content.replace(code, newCode);
 
