@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 		},
 
 		uglify : {
-			'release/markdownhtml.min.js' : ['markdownhtml.js']
+			'release/markdownhtml.min.js' : ['release/markdownhtml.js']
 		},
 		
 
